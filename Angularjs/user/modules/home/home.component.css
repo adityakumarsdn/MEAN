@@ -1,0 +1,141 @@
+.modal-backdrop.in {
+    opacity: 0 !important;
+}
+
+.fileDelete {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.btnStatusChange {
+    height: 25px !important;
+    padding: 2px !important;
+    width: 70px !important;
+}
+
+.bg-aqua,
+.bg-green,
+.bg-yellow,
+.bg-red {
+    background-color: #ffffff !important;
+    box-shadow: 0px 0px 13px #ccc
+}
+
+.small-box>.inner {
+    padding: 5px 18px 1px 20px !important;
+    width: 75%
+}
+
+.fa-plus {
+    cursor: pointer;
+}
+
+.cardcaret:after {
+    font-size: 17px !important;
+}
+
+.fa-wechat {
+    color: #ef423d;
+}
+
+.touser {
+    background: #716060 !important;
+}
+
+.browseBtn {
+    position: relative;
+    width: 30px;
+    display: inline-block;
+    background: transparent;
+    border-radius: 0;
+    color: #000;
+    text-align: center;
+}
+
+.browseBtn .form-input {
+    width: auto;
+    border-radius: 0px;
+    cursor: pointer;
+    margin: 0;
+}
+
+.inputRowSection {
+    position: relative;
+}
+
+.inputRowSection .chatFromInput {
+    padding-right: 85px
+}
+
+.inputRowSection .inputBtnRow {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.inputRowSection .inputBtnRow .btn {
+    background: transparent;
+    padding: 6px 6px;
+    position: relative;
+    z-index: 999;
+}
+
+.carName {
+    color: #72afd2;
+    font-size: 20px;
+}
+
+.quote_product_description {
+    min-width: 300px;
+}
+
+
+.listRecentItem {
+    margin-bottom: -20px;
+}
+
+.fontPref {
+    margin-bottom: -12px;
+}
+
+.actionDiv {
+    margin-top: 20px;
+}
+
+.item-cursor {
+    cursor: pointer;
+}
+
+@media (max-width: 767px) {
+
+    .content-header {
+        text-align: center;
+    }
+}
+
+
+.imagdiv {
+    display: inline-block;
+    width: 60px;
+    vertical-align: top;
+}
+
+/* .homeRating{ display: inline-block;  width: 230px !important;} */
+.homeRating {
+    display: inline-block;
+    width: 282px !important;
+}
+
+/* .homeRatingNew{     display: inline-block;   width: 154px; vertical-align: top;} */
+.homeRatingNew {
+    display: inline-block;
+    width: 109px;
+    vertical-align: top;
+}
+
+.m-l-10 {
+    margin-left: 10px !important;
+}
+
+.product-description.detailTime{ margin-top: 0;}
+.product-description.detailTime .fontPref{ margin-top: 0;}

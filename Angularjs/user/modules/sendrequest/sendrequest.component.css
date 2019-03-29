@@ -1,0 +1,101 @@
+.multiSelect>.form-control {
+    padding: 0px 12px !important;
+}
+
+.multiSelect .ui-multiselect .ui-multiselect-trigger {
+    top: 0px !important;
+}
+
+.calendarIcon {
+    position: absolute;
+    right: 30px;
+    top: 37px;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.boxhead {
+    background: #f1f1f1;
+}
+
+.cardcaret:after {
+    font-size: 17px !important;
+    color: #5a5a5a;
+}
+
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:focus,
+.nav-tabs>li.active>a:hover {
+    font-size: 30px !important;
+}
+
+.timeline>li>.timeline-item {
+    margin-left: 30px;
+}
+
+.list-row .checkbox label {
+    padding-left: 0;
+    font-size: 25px !important;
+}
+
+/* 
+.list-box {
+    height: 160px;
+} */
+
+ul.cars_button {
+    padding: 0;
+    list-style: none;
+}
+
+ul.cars_button li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+ul.cars_button li .btn.btn_custom_car {
+    background: #e35552;
+    border-color: #e35552;
+    min-height: 38px;
+    padding: 0;
+    margin: 5px 0;
+    min-width: 90px;
+}
+
+.zip_details {
+    width: 280px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+@media (max-width: 767px) {
+    .send_request_section {
+        float: none !important;
+    }
+
+    .zip_details {
+        width: 150px;
+    }
+
+    .search_input_details .btn-primary {
+        min-width: 110px;
+    }
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 2rem;
+    color: #d3d3d3;
+}
+
+.full {
+    color: red;
+}
+
+.half {
+    position: absolute;
+    display: inline-block;
+    overflow: hidden;
+    color: red;
+}

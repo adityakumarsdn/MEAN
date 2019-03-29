@@ -1,0 +1,128 @@
+<section class="content-header">
+    <h1>
+        Repair Request List
+    </h1>
+    <ol class="breadcrumb">
+        <li><a [routerLink]="['/user/dashboard']">Home</a></li>
+        <li class="active">Repair Request</li>
+    </ol>
+</section>
+<section class="content" *ngIf='isActive==false; else ActiveTemp'>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Repair Request History</h3>
+
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" class="appointment_box_tool">
+                            <input [(ngModel)]="searchText" (keypress)="userAppointmentHistoryList()" type="text" name="table_search"
+                                class="form-control pull-right" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <table class="table table-striped table-hover" *ngIf='previousCount!=0'>
+                        <tbody>
+                            <tr>
+                                <!-- <th class="text-center">No</th> -->
+                                <th class="text-center">Shop Name</th>
+                                <th class="text-center">1st Preference Date</th>
+                                <th class="text-center">2nd Preference Date</th>
+                                <th class="text-center">Car Name</th>
+                                <th class="text-center">Status</th>
+                                <!-- <th class="text-center">Action</th> -->
+                            </tr>
+                            <tr *ngFor="let list of previousList; let i=index">
+                                <!-- <td class="text-center">{{i+1}}</td> -->
+                                <td class="text-center"><a [routerLink]="['/user/detail', list._id]" class="product-title">{{list.shopName}}</a></td>
+                                <td class="text-center"><b>{{list.firstDate | date}}</b> <br />{{ list.firstDayTme}}</td>
+                                <td class="text-center"><b>{{list.secondDate | date}}</b> <br />{{ list.secondDayTme}}</td>
+                                <td class="text-center">{{list.makename}} {{list.modelname}}</td>
+                                <td class="text-center" *ngIf="list.isAccept=='1'"><span class="label label-success">Accepted</span></td>
+                                <td class="text-center" *ngIf="list.isAccept=='-1'"><span class="label label-danger">Declined</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="box-footer clearfix">
+                        <h4 *ngIf="previousCount==0" class="text-center box-title">No repair history yet.</h4>
+                        <ngb-pagination class="pull-right" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" *ngIf="previousCount!=0"
+                            [collectionSize]="previousCount" (pageChange)="pageChange($event)" [(page)]="page"
+                            aria-label="Default pagination"></ngb-pagination>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+</section>
+
+<ng-template #ActiveTemp>
+    <section class="content">
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Active Repair Request</h3>
+
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" class="appointment_box_tool">
+                                <input [(ngModel)]="searchTextActive" (keypress)="userAppointmentList()" type="text"
+                                    name="table_search2" class="form-control pull-right" placeholder="Search">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive">
+                        <table class="table table-striped table-hover" *ngIf='activeCount!=0'>
+                            <tbody>
+                                <tr>
+                                    <!-- <th class="text-center">No</th> -->
+                                    <th class="text-center">Shop Name</th>
+                                    <th class="text-center">1st Preference Date</th>
+                                    <th class="text-center">2nd Preference Date</th>
+                                    <th class="text-center">Car Name</th>
+                                    <th class="text-center">Status</th>
+                                    <th class="text-center">Action</th>
+                                </tr>
+                                <tr *ngFor="let list of activeList; let i=index">
+
+                                    <!-- <td class="text-center">{{i+1}}</td> -->
+                                    <td *ngIf="!list.nonVerifiedName" class="text-center"><a [routerLink]="['/user/detail', list._id]"
+                                            class="product-title">{{list.shopName}}</a></td>
+                                    <td *ngIf="list.nonVerifiedName" class="text-center"><a [routerLink]="['/user/detail', list._id]"
+                                            class="product-title">{{list.nonVerifiedName}}</a></td>
+
+                                    <td class="text-center"><b>{{list.firstDate | date}}</b> <br />{{
+                                        list.firstDayTme}}</td>
+                                    <td class="text-center" *ngIf="list.secondDate !='' else secondDat"><b>{{list.secondDate
+                                            | date}}</b> <br />{{ list.secondDayTme}}</td>
+                                    <ng-template>
+                                        <td class="text-center">No second preference date.</td>
+                                    </ng-template>
+                                    <td class="text-center">{{list.makename}} {{list.modelname}}</td>
+                                    <td class="text-center" *ngIf="list.isAccept=='0'"><span class="label label-warning">Active</span></td>
+                                    <td class="text-center" *ngIf="list.isAccept=='1'"><span class="label label-success">Accepted</span></td>
+                                    <td class="text-center" *ngIf="list.isAccept=='-1'"><span class="label label-danger">Declined</span></td>
+                                    <td class="text-center"><i class="fa fa-fw fa-trash-o fileDelete" (click)="deleteAppointment(list._id, index)"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="box-footer clearfix">
+                            <h4 *ngIf="activeCount==0" class="text-center box-title">No repair request sent yet.</h4>
+                            <ngb-pagination class="pull-right" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                                *ngIf="activeCount!=0" [collectionSize]="activeCount" (pageChange)="pageChangeActive($event)"
+                                [(page)]="page" aria-label="Default pagination"></ngb-pagination>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+    </section>
+</ng-template>

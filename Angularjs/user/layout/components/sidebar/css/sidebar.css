@@ -1,0 +1,18 @@
+.sidebar-menu li a i img {
+  width: 20px;
+}
+.img-circle{
+  margin: 0 auto;
+  width: 100px;
+  max-height: 80px;
+  padding: 1px;
+  border: 2px solid #d2d6de;
+}
+.pull-left image{
+  margin: 0 auto;
+  width: 100px;
+  max-height: 80px;
+  padding: 1px;
+  border: 2px solid #d2d6de;
+
+}

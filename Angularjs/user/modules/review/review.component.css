@@ -1,0 +1,33 @@
+.addButton{
+    font-size: 16px;
+    color: #23a7d3;
+    cursor: pointer
+}
+.textArea{
+    resize: vertical;
+}
+.appointment_box_tool{
+    width: 150px;
+}
+
+@media (max-width: 767px){
+    .appointment_box_tool{
+        width: 130px;
+    }
+    
+    .box-header{
+        padding: 13px 15px;
+    }
+    .box-header>.fa, .box-header>.glyphicon, .box-header>.ion, .box-header .box-title{
+        font-size: 15px;
+    }
+    
+
+}
+
+
+/* .rating.addReview.ui-rating> a{ pointer-events: auto !important;} */
+
+
+
+

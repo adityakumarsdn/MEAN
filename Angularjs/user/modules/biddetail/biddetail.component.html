@@ -1,0 +1,74 @@
+<section class="content-header">
+    <h1>
+        Appointment Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li><a [routerLink]="['/user/dashboard']">Home</a></li>
+        <li class="active">Appointment Detail</li>
+    </ol>
+</section>
+
+<section class="invoice" *ngFor="let detail of bidList">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">Detail
+                <small class="pull-right">Date: {{detail.createdAt| date}}</small>
+            </h2>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+        <div *ngIf="!detail.nonVerifiedFirstName && !detail.nonVerifiedLastName && !detail.nonVerifiedName && !detail.nonVerifiedId"
+            class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.mechanic_firstname}} {{detail.mechanic_lastname}}</i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+        <div *ngIf="detail.nonVerifiedFirstName && detail.nonVerifiedLastName" class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.nonVerifiedFirstName}} {{detail.nonVerifiedLastName}}</i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+        <div *ngIf="detail.nonVerifiedName" class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.nonVerifiedName}} </i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+
+        <div class="col-sm-4 invoice-col">
+            <b>Appointment Date:</b> {{detail.appointmentDate | date}}<br>
+            <b>Appointment Time:</b> {{detail.appointmentTime}}
+        </div>
+        <div class="col-sm-2 invoice-col">
+            <b>Price:</b> ${{detail.price}}<br>
+            <b>Status:</b>
+            <span *ngIf="detail.isAccepted==-1" class="label label-danger"> Declined</span>
+            <span *ngIf="detail.isAccepted==0" class="label label-warning"> Active</span>
+            <span *ngIf="detail.isAccepted==1" class="label label-success"> Accepted</span>
+        </div>
+        <div class="col-sm-2 invoice-col">
+            <button [disabled]="detail.isAccepted!=0" (click)="acceptRejectBidRequest(detail._id,'1')" class="btn btn-success btnAction">
+                Accept</button>
+            <button [disabled]="detail.isAccepted==-1" (click)="acceptRejectBidRequest(detail._id,'-1')" class="btn btn-danger btnAction">
+                Decline</button>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <p style="margin-top: 15px;">{{detail.description}}</p>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+
+</section>

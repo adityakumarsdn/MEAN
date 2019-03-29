@@ -1,0 +1,115 @@
+<section class="content-header">
+    <h1>
+        Repair Request Detail
+    </h1>
+    <ol class="breadcrumb">
+        <li>
+            <a>Repair Request</a>
+        </li>
+        <li class="active">Detail</li>
+    </ol>
+</section>
+
+<section class="invoice" *ngFor="let detail of appointmentList">
+    <!-- title row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 class="page-header">Detail
+                <small class="pull-right">Date: {{detail.createdAt| date}}</small>
+            </h2>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- info row -->
+    <div class="row invoice-info">
+
+        <div *ngIf="!detail.nonVerifiedFirstName && !detail.nonVerifiedLastName && !detail.nonVerifiedName" class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.mechanic_firstname}} {{detail.mechanic_lastname}}</i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+        <div *ngIf="detail.nonVerifiedFirstName && detail.nonVerifiedLastName" class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.nonVerifiedFirstName}} {{detail.nonVerifiedLastName}}</i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+        <div *ngIf="!detail.nonVerifiedFirstName && !detail.nonVerifiedLastName && detail.nonVerifiedName" class="col-sm-4 invoice-col">
+            <address>
+                <strong><i>{{detail.nonVerifiedName}} </i></strong><br>
+                <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+            </address>
+        </div>
+
+        <!-- <div class="col-sm-4 invoice-col">
+            <address>
+                <strong>
+                    <i>{{detail.mechanic_firstname}} {{detail.mechanic_lastname}}</i>
+                </strong>
+                <br> -->
+        <!-- <b>Email: </b> {{detail.mechanic_email}} -->
+        <!-- </address>
+        </div> -->
+        <div class="col-sm-4 invoice-col">
+            <b>First Date:</b> {{detail.firstDate | date}}
+            <br>
+            <b>First Date Time:</b> {{detail.firstDayTme}}
+        </div>
+        <div class="col-sm-4 invoice-col">
+            <b>Second Date:</b> {{detail.secondDate | date}}
+            <br>
+            <b>Second Date Time:</b> {{detail.secondDayTme}}
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-xs-6 table-responsive">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th style="width:50%">Year:</th>
+                        <td>{{detail.year}}</td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">Make:</th>
+                        <td>{{detail.makename}}</td>
+                    </tr>
+                    <tr>
+                        <th>Model</th>
+                        <td>{{detail.modelname}}</td>
+                    </tr>
+                    <tr>
+                        <th>Trim :</th>
+                        <td>{{detail.trimname}}</td>
+                    </tr>
+                    <tr>
+                        <th>Mileage:</th>
+                        <td>{{detail.mileage}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6 table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Issues</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let issue of detail.task; let i=index;">
+                        <td>{{i+1}}</td>
+                        <td>{{issue.issueId.name}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>

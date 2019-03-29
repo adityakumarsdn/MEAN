@@ -1,0 +1,655 @@
+<div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="row">
+            <div class="col-md-4 col-sm-6">
+                <h1 style="font-size: 25px;">
+                    Car Owner Dashboard
+                </h1>
+            </div>
+            <div class="col-md-4 col-sm-6 text-center">
+                <button routerLink='/user/sendrequest' class="btn btn-primary send_request_btn">Send a new request</button>
+            </div>
+        </div>
+
+        <ol class="breadcrumb">
+            <li class="active">Dashboard</li>
+        </ol>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>{{scheduleCount}}</h3>
+                        <p>Active Repair Requests</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>{{bidCount}}</h3>
+                        <p>Quotes Received</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{bookingCount}}</h3>
+                        <p>Bookings</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{carCount}}</h3>
+                        <p>Cars</p>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <!-- Main row -->
+
+        <!-- /.row (main row) -->
+        <div class="row">
+            <section class="col-lg-12 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <h3 class="box-title">Recent Repair Request
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                <img src="assets/dist/img/minimized-icon.png" alt="">
+                            </button>
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                <img src="assets/dist/img/closed_icon.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="products-list product-list-in-box listRecentItem" *ngFor="let appoint of appointmentList;  let rowIndex = index">
+                            <li (click)="userQuotesListByRequestId(appoint._id)" class="item item-cursor">
+                                <div class="col-md-3">
+                                    <a class="product-title">{{appoint.makename}}
+                                        {{appoint.modelname}}</a>
+                                    <div>
+                                        <p class="submitDate">Submitted On: {{appoint.createdAt|date}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <p *ngFor="let issue of appoint.issues" class="product-title ">{{issue.name}}</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="product-description detailTime">
+                                        <h4 class="fontPref"> 1<sup>st</sup> Pref: {{appoint.firstDate | date}} {{
+                                            appoint.firstDayTme}}
+                                        </h4>
+                                        <br />
+                                        <h4 *ngIf="appoint.secondDate!=''"> 2<sup>nd</sup> Pref: {{appoint.secondDate |
+                                            date}}{{ appoint.secondDayTme}}</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 actionDiv">
+                                    <!-- <i class="fa fa-fw fa-trash-o pull-right fileDelete" (click)="deleteAppointment(appoint._id, rowIndex)"></i> -->
+                                    <span *ngIf="appoint.isDone==false" class="label label-warning pull-right">Active</span>
+                                    <span *ngIf="appoint.isDone==true" class="label label-success pull-right">Accepted</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul *ngIf="scheduleCount==0" class="text-center">Repair request not sent yet.</ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+        </div>
+        <div class="row">
+
+            <section class="col-lg-6 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <h3 class="box-title">Quotes
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                <img src="assets/dist/img/minimized-icon.png" alt="">
+                            </button>
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                <img src="assets/dist/img/closed_icon.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div class="boxItem">
+                        <div class="box-body box-body-padding">
+                            <ul class="products-list product-list-in-box">
+                                <li class="item">
+                                    <ul class="innerList" style="list-style-type:none; margin:0; padding:0;">
+                                        <li class="imagdiv">
+                                            <div class="product-img">
+                                                <img class="image-user" src="assets/dist/img/hand.png" alt="">
+                                            </div>
+                                        </li>
+                                        <li class="homeRating">
+                                            <div _ngcontent-c2="" class="product-info home-rating m-l-10">
+
+                                                <a _ngcontent-c2="" class="product-title" ng-reflect-router-link="/user/biddetail,5bffb2af22736a"
+                                                    href="/user/biddetail/5bffb2af22736a5c59fb21cf">car repairing
+                                                    center</a>
+
+
+
+
+                                                <div _ngcontent-c2="" class="product-description detailTime  ">
+                                                    <b _ngcontent-c2="">Nov 30, 2018</b> at 8:00 AM
+                                                    <b _ngcontent-c2="" class="label label-info" style="margin-left:10px; font-size: 12px !important;">$100.00</b>
+
+
+                                                </div>
+                                                <div _ngcontent-c2="">
+
+                                                    <p _ngcontent-c2="" class="submitDate">Submitted On: Nov 29, 2018</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="homeRatingNew">
+                                            <p-rating _ngcontent-c2="" class="rating pull-right ng-untouched ng-pristine ng-valid"
+                                                readonly="true" ng-reflect-readonly="true" ng-reflect-cancel="false"
+                                                ng-reflect-model="">
+                                                <div class="ui-rating" ng-reflect-klass="ui-rating" ng-reflect-ng-class="[object Object]">
+
+                                                    <a href="#">
+                                                        <span class="fa fa-star-o" ng-reflect-klass="fa"
+                                                            ng-reflect-ng-class="fa-star-o"></span>
+                                                    </a><a href="#">
+                                                        <span class="fa fa-star-o" ng-reflect-klass="fa"
+                                                            ng-reflect-ng-class="fa-star-o"></span>
+                                                    </a><a href="#">
+                                                        <span class="fa fa-star-o" ng-reflect-klass="fa"
+                                                            ng-reflect-ng-class="fa-star-o"></span>
+                                                    </a><a href="#">
+                                                        <span class="fa fa-star-o" ng-reflect-klass="fa"
+                                                            ng-reflect-ng-class="fa-star-o"></span>
+                                                    </a><a href="#">
+                                                        <span class="fa fa-star-o" ng-reflect-klass="fa"
+                                                            ng-reflect-ng-class="fa-star-o"></span>
+                                                    </a>
+                                                </div>
+                                            </p-rating>
+                                            <i _ngcontent-c2="" class="fa fa-fw fa-trash-o pull-right fileDelete"></i>
+                                            <i _ngcontent-c2="" class="fa fa-fw fa-wechat pull-right fileDelete"></i>
+                                            <span _ngcontent-c2="" class="label label-success pull-right">Quote
+                                                Received</span>
+                                        </li>
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+                        </div>
+
+                    </div> -->
+
+                    <div class="box-body box-body-padding">
+                        <ul class="products-list product-list-in-box" *ngFor="let bid of bidList; let rowIndex = index">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img class="image-user" src="assets/dist/img/hand.png" alt="">
+                                </div>
+                                <div class="product-info home-rating m-l-10">
+                                    <a *ngIf="bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.nonVerifiedName}}</a>
+                                    <a *ngIf="!bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.shopName}}</a>
+
+                                    <!-- <p-rating class="rating pull-right" [(ngModel)]="bid.rating" readonly="true"
+                                        [cancel]="false"></p-rating> -->
+
+                                    <div class="product-description detailTime  ">
+                                        <b>{{bid.appointmentDate | date}}</b> at {{ bid.appointmentTime}}
+                                        <b style="margin-left:10px; font-size: 12px !important;" class="label label-info">{{bid.price
+                                            |
+                                            currency:'USD':true}}</b>
+
+                                        <i class="fa fa-fw fa-trash-o pull-right fileDelete" (click)="deleteBidDetail(bid._id, rowIndex)"></i>
+                                        <!-- <i class="fa fa-fw fa-wechat pull-right fileDelete" (click)="isUserActive(bid)"></i> -->
+                                        <span *ngIf="bid.mechanicAccept==0" class="label label-warning pull-right">No
+                                            Response</span>
+                                        <span *ngIf="bid.mechanicAccept==1" class="label label-success pull-right">Quote
+                                            Received</span>
+                                        <span *ngIf="bid.mechanicAccept==-1" class="label label-danger pull-right">Declined</span>
+                                    </div>
+                                    <div>
+
+                                        <p class="submitDate">Submitted On: {{bid.createdAt|date}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul *ngIf="bidCount==0" class="text-center">No quotes yet.</ul>
+                    </div>
+
+
+
+                    <!-- 
+                    <div class="box-body box-body-padding">
+                        <ul class="products-list product-list-in-box" *ngFor="let bid of bidList; let rowIndex = index">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img class="image-user" src="assets/dist/img/hand.png" alt="">
+                                </div>
+
+
+                                <div class="product-info home-rating">
+                                    <a *ngIf="bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.nonVerifiedName}}</a>
+                                    <a *ngIf="!bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.shopName}}</a>
+
+
+
+                                    <div class="product-description detailTime  quote_product_description">
+                                        <b>{{bid.appointmentDate | date}}</b> at {{ bid.appointmentTime}}
+                                        <b style="margin-left:10px; font-size: 12px !important;" class="label label-info">{{bid.price
+                                            |
+                                            currency:'USD':true}}</b>
+
+
+                                    </div>
+                                    <p class="submitDate">Submitted On: {{bid.createdAt|date}}</p>
+
+
+                                </div>
+
+
+
+                               
+                                <div class="product-description detailTime">
+                                    <p-rating class="rating pull-right" [(ngModel)]="bid.rating" readonly="true"
+                                        [cancel]="false"></p-rating>
+
+
+                                    <i class="fa fa-fw fa-trash-o pull-right fileDelete" (click)="deleteBidDetail(bid._id, rowIndex)"></i>
+                                    <i class="fa fa-fw fa-wechat pull-right fileDelete" (click)="isUserActive(bid)"></i>
+                                    <span *ngIf="bid.mechanicAccept==0" class="label label-warning pull-right">No
+                                        Response</span>
+                                    <span *ngIf="bid.mechanicAccept==1" class="label label-success pull-right">Quote
+                                        Received</span>
+                                    <span *ngIf="bid.mechanicAccept==-1" class="label label-danger pull-right">Declined</span>
+                                </div>
+
+
+                            </li>
+                        </ul>
+                        <ul *ngIf="bidCount==0" class="text-center">No quotes yet.</ul>
+                    </div> -->
+                    <!-- /.box-body -->
+                </div>
+            </section>
+
+            <section class="col-lg-6 connectedSortable">
+                <!-- Custom tabs (Charts with tabs)-->
+                <div class="box box-solid">
+                    <div class="box-header">
+                        <h3 class="box-title">Bookings
+                        </h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                <img src="assets/dist/img/minimized-icon.png" alt="">
+                            </button>
+                            <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                <img src="assets/dist/img/closed_icon.png" alt="">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="products-list product-list-in-box" *ngFor="let bid of bookingList; let rowIndex = index">
+                            <li class="item">
+                                <div class="product-img">
+                                    <img class="image-user" src="assets/dist/img/hand.png" alt="">
+                                </div>
+                                <div class="product-info home-rating">
+                                    <a *ngIf="!bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.shopName}}</a>
+                                    <a *ngIf="bid.nonVerifiedName" [routerLink]="['/user/biddetail', bid._id]" class="product-title">{{bid.nonVerifiedName}}</a>
+
+                                    <!-- <p-rating class="rating pull-right" [(ngModel)]="bid.rating" readonly="true"
+                                        [cancel]="false"></p-rating> -->
+                                    <div class="product-description detailTime">
+                                        <b>{{bid.appointmentDate | date}}</b> at {{ bid.appointmentTime}}
+                                        <b style="margin-left:10px; font-size: 12px !important;" class="label label-info">{{bid.price
+                                            |
+                                            currency:'USD':true}}</b>
+                                        <i class="fa fa-fw fa-trash-o pull-right fileDelete" (click)="deleteBidDetail(bid._id, rowIndex)"></i>
+                                        <!-- <i class="fa fa-fw fa-wechat pull-right fileDelete" (click)="isUserActive(bid)"></i> -->
+                                        <span *ngIf="bid.isAccepted==0" class="label label-warning pull-right">Active</span>
+                                        <span *ngIf="bid.isAccepted==1" class="label label-success pull-right">Confirmed</span>
+                                        <span *ngIf="bid.isAccepted==-1" class="label label-danger pull-right">Declined</span>
+                                    </div>
+                                    <div>
+                                        <p class="submitDate">Submitted On: {{bid.createdAt|date}}</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul *ngIf="bookingCount==0" class="text-center">No appointment booking yet.</ul>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+            </section>
+
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-7 connectedSortable">
+                    <!-- Custom tabs (Charts with tabs)-->
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <h3 class="box-title">Previous Mechanic Services</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                    <img src="assets/dist/img/minimized-icon.png" alt="">
+                                </button>
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                    <img src="assets/dist/img/closed_icon.png" alt="">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body border-radius-none">
+                            <div class="chart" style="height: 415px;">
+                                <!-- <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [disableDefaultUI]="false"
+                                    [zoomControl]="false" (mapClick)="mapClicked($event)">
+
+                                    <agm-marker *ngFor="let m of markers; let i = index" [latitude]="m.lat" [longitude]="m.lng"
+                                        [label]="m.label">
+
+                                        <agm-info-window>
+                                            <strong>InfoWindow content</strong>
+                                        </agm-info-window>
+                                    </agm-marker>
+                                </agm-map> -->
+                                <agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom1" [disableDefaultUI]="false"
+                                    [zoomControl]="false">
+
+                                    <agm-marker *ngFor="let m of mechanicLocationHistory; let i = index" [latitude]="m.lat"
+                                        [longitude]="m.lng" [label]="m.label" [markerDraggable]="m.draggable">
+
+                                        <agm-info-window>
+                                            <strong>{{m.name}}</strong>
+                                        </agm-info-window>
+
+                                    </agm-marker>
+
+                                </agm-map>
+                                <!-- <img src="assets/dist/img/active_properties.png" alt=""> -->
+                            </div>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- /.Left col -->
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-5 connectedSortable">
+                    <!-- Custom tabs (Charts with tabs)-->
+                    <div class="box box-solid">
+                        <div class="box-header">
+                            <h3 class="box-title">Your cars
+                            </h3>
+                            <i class="fa fa-fw fa-plus" (click)="open(content)"></i>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse">
+                                    <img src="assets/dist/img/minimized-icon.png" alt="">
+                                </button>
+                                <button type="button" class="btn bg-teal btn-sm" data-widget="remove">
+                                    <img src="assets/dist/img/closed_icon.png" alt="">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <ul class="products-list product-list-in-box" *ngFor="let car of carList let rowIndex = index">
+                                <li class="item">
+                                    <div class="product-img">
+                                        <img class="image-user" src="assets/images/image.png" alt="">
+                                        <!-- <img *ngIf="car.image=='' else imageShow" class="image-user" src="assets/images/image.png" alt=""> -->
+                                        <!-- <ng-template #imageShow>
+                                            <img class="img-circle" src="http://172.10.28.29:5400/{{car.image}}" alt="">
+                                        </ng-template> -->
+                                    </div>
+                                    <div class="product-info">
+                                        <a href="javascript:void(0)" class="product-title">{{car.makeId}}</a>
+                                        <span class="product-description"> {{car.year}} {{car.modelId}} {{car.trimId}}
+                                            {{car.mileage + "(miles)"}}
+                                            <i class="fa fa-fw fa-trash-o pull-right fileDelete" (click)="deleteCarDetail(car._id, rowIndex)"></i>
+                                            <i class="fa fa-fw fa-pencil pull-right fileEdit fileDelete" (click)="openEdit(newContent, car)">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ul *ngIf="carCount==0" class="text-center">Car(s) not added yet.</ul>
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- right col -->
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+
+<!-- chat div start -->
+<!-- <div class="chat-window-main" *ngIf="isChatOpen">
+    <div class="chat-header">
+        <span class="chat-head">{{mechanicName}}</span>
+        <span class="minimize-chat" (click)="closeChatBox()" title="Minimize Chat Window">
+            <span></span>
+        </span>
+    </div> -->
+<!-- <div class="chat-details-outer"> -->
+<!-- <div class="chat-me-main">
+			<span class="chat-name">Kewin Luise</span>
+			<span class="chat-time">June 26, 2018 10:20am</span>
+			<div class="chat-desc">Chat message goes here. Chat message here.</div>
+        </div> -->
+<!-- <h3>Chat feature is coming soon...</h3>
+        <div class="chat-me-main chat-other-main">
+            <div class="chat-other-rt" *ngFor="let msg of messageList"> -->
+<!-- <span class="chat-name">Sanjay Khanna</span> -->
+<!-- <span class="chat-time">June 26, 2018 10:20am</span> -->
+<!-- <div class="other-msg-det-main" *ngIf="msg.userId==userId; else rightchat">
+                    <img src="assets/dist/img/user1-128x128.jpg" alt="image" class="pull-left">
+                    <div class="chat-desc" *ngIf="msg.isFile=='0'; else noFile">{{msg.text}}</div>
+                    <ng-template #noFile>
+                        <div class="chatFile" style="margin-left: 50px"> -->
+<!-- <img src="http://172.10.28.29:5400/{{msg.text}}" alt="image"> -->
+<!-- <img src="http://35.167.239.172:5220/{{msg.text}}" alt="image">
+                        </div>
+                    </ng-template>
+                </div> -->
+<!-- <ng-template #rightchat>
+                    <div class="other-msg-det-main">
+                        <div class="chat-desc touser" *ngIf="msg.isFile=='0'; else noFile">{{msg.text}}</div>
+                        <ng-template #noFile>
+                            <div class="chatFile" style="margin-left: 50px"> -->
+<!-- <img src="http://172.10.28.29:5400/{{msg.text}}" alt="image"> -->
+<!-- <img src="http://35.167.239.172:5220/{{msg.text}}" alt="image">
+                            </div>
+                        </ng-template>
+                        <img src="assets/dist/img/user1-128x128.jpg" alt="image" class="pull-left">
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div> -->
+<!-- <div class="chat-input">
+        <form [formGroup]="sendForm" (ngSubmit)="onSendSubmit()">
+            <div class="">
+                <div class="inputRowSection">
+                    <input type="text" class="form-control chatFromInput" placeholder="Type your message..." id="message"
+                        name="message" formControlName="message" autofocus="true" autocomplete="off">
+
+                    <div class="inputBtnRow">
+                        <div class="browseBtn">
+                            <input type="file" (change)="uploadMessageFile($event)" class=" form-input form-style-base">
+                            <span class="fa fa-paperclip"></span>
+                        </div>
+                        <button [disabled]="sendForm.invalid" class="form-control" type="submit" class="btn" name="send">
+                            <span class="fa fa-paper-plane-o"></span>
+                        </button>
+                    </div>
+                </div>
+
+
+            </div>
+        </form>
+    </div> -->
+<!-- </div> -->
+<!-- chat div end -->
+
+<ng-template #content let-c="close" let-d="dismiss" class="modalTime">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Add Car</h4>
+    </div>
+    <div class="modal-body">
+        <!-- <form id="updateForm" class="form-horizontal" (ngSubmit)="changeStatus()" novalidate> -->
+        <div class="box-body">
+            <form id="RequestForm" [formGroup]="carForm" novalidate>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Year</label>
+                        <div class="cardcaret">
+                            <select formControlName="year" #years class="form-control" (change)="ListMake(years.value)"
+                                required>
+                                <option [ngValue]="null" disabled [selected]="true">Select Year</option>
+                                <option *ngFor='let year of yearList' [value]='year.year'>{{year.year}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Make</label>
+                        <div class="cardcaret">
+                            <select formControlName="make" #makes (change)="ListModel(makes.value)" class="form-control"
+                                required>
+                                <option value="">Select Make</option>
+                                <option *ngFor='let make of makeList' [value]='make.make'>{{make.make | titlecase}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Model</label>
+                        <div class="cardcaret">
+                            <select formControlName="model" #models (change)="ListTrim(models.value)" class="form-control"
+                                required>
+                                <option value="">Select Model</option>
+                                <option *ngFor='let model of modelList' [value]='model.model'>{{model.model}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Trim</label>
+                        <div class="cardcaret">
+                            <select formControlName="trim" class="form-control">
+                                <option value="">Select Trim</option>
+                                <option *ngFor='let trim of trimList' [value]='trim.trim'>{{trim.trim}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Mileage</label>
+                        <input formControlName="mileage" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                            onKeyPress="if(this.value.length==2) return false;" class="form-control" placeholder="Enter Mileage"
+                            ng-maxlenth="2" required>
+                    </div>
+                </div>
+                <div class="text-right margin-top-20">
+                    <button [disabled]="carForm.invalid" data-toggle="tab" (click)="addCarDetail()" type="submit" class="btn btn-primary">
+                        <span class="step-txt">Add CAR</span>
+                    </button>
+                    <!-- <button [disabled]="carForm.invalid"  type="submit" class="btn btn-primary">
+                                    next
+                                    </button> -->
+                </div>
+            </form>
+        </div>
+        <!-- </form> -->
+    </div>
+    <!-- <div class="modal-footer">
+    <button type="button" class="btn btn-primary pull-right" (click)="c('Save click')">Save</button>
+  </div>  -->
+</ng-template>
+
+<ng-template #newContent let-c="close" let-d="dismiss" class="modalTime">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit Car</h4>
+    </div>
+    <div class="modal-body">
+        <!-- <form id="updateForm" class="form-horizontal" (ngSubmit)="changeStatus()" novalidate> -->
+        <div class="box-body">
+            <form id="RequestForm" [formGroup]="carForm" novalidate>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Year</label>
+                        <label class="form-control">{{carDetail.year}}</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Make</label>
+                        <label class="form-control">{{carDetail.makeId}}</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Model</label>
+                        <label class="form-control">{{carDetail.modelId}}</label>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Trim</label>
+                        <label class="form-control">{{carDetail.trimId}}</label>
+
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="usr">Mileage</label>
+                        <input formControlName="mileage" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                            onKeyPress="if(this.value.length==2) return false;" [(ngModel)]="carDetail.mileage" class="form-control"
+                            placeholder="Enter Mileage" ng-maxlenth="2" required>
+                    </div>
+                </div>
+                <div class="text-right margin-top-20">
+                    <button [disabled]="carForm.invalid" data-toggle="tab" (click)="editCarDetail(carDetail)" type="submit"
+                        class="btn btn-primary">
+                        <span class="step-txt">Edit car</span>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+        <!-- </form> -->
+    </div>
+</ng-template>
